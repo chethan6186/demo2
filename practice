@@ -119,4 +119,4 @@ Click Save.
 sudo apt update
 sudo apt install snapd -y
 sudo snap install ngrok
-
+ngrok http 8080
