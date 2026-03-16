@@ -1,0 +1,122 @@
+sudo apt install openjdk-21-jdk -y
+wget https://get.jenkins.io/war-stable/latest/jenkins.war
+java -jar jenkins.war
+
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Clone') {
+            steps {
+                git url: 'https://github.com/USERNAME/jenkins-simple-demo.git', branch: 'main'
+            }
+        }
+
+        stage('Run Script') {
+            steps {
+                sh 'chmod +x script.sh'
+                sh './script.sh'
+            }
+        }
+
+    }
+}
+
+
+10. Configure Pipeline
+
+Scroll to Pipeline section
+
+Select:
+
+Pipeline script from SCM
+
+Choose:
+
+Git
+
+Enter your repository URL:
+
+https://github.com/USERNAME/jenkins-simple-demo.git
+3. Configure Jenkins Webhook Endpoint
+
+The Jenkins webhook URL format is:
+
+https://YOUR_NGROK_LINK/github-webhook/
+
+Example:
+
+https://abcd1234.ngrok.io/github-webhook/
+4. Add Webhook in GitHub
+
+Open your repository on GitHub.
+
+Go to:
+
+Settings → Webhooks → Add webhook
+
+Fill the fields:
+
+Payload URL
+https://abcd1234.ngrok.io/github-webhook/
+Content type
+application/json
+Events
+
+Select:
+
+Just the push event
+
+Then click:
+
+Add webhook
+5. Enable GitHub Hook in Jenkins
+
+Open your Jenkins job.
+
+Go to:
+
+Configure
+
+Under Build Triggers, enable:
+
+GitHub hook trigger for GITScm polling
+
+Save the job.
+
+6. Test the CI/CD Pipeline
+
+Now push code to GitHub.
+
+Example:
+
+git add .
+git commit -m "test webhook"
+git push origin main
+
+Immediately Jenkins will start a build automatically.
+
+Expected Flow
+GitHub push
+     ↓
+GitHub webhook
+     ↓
+ngrok tunnel
+     ↓
+Jenkins server
+     ↓
+Pipeline build starts
+
+This is a real CI/CD workflow used in companies.
+Branch:
+
+main
+
+Click Save.
+
+
+sudo apt update
+sudo apt install snapd -y
+sudo snap install ngrok
+
